@@ -1,5 +1,12 @@
 #cloud-config
 autoinstall:
+  version: 1
+  keyboard: {layout: pt, toggle: null, variant: ''}
+  locale: en_US.UTF-8
+  network:
+    ethernets:
+      enp0s3: {dhcp4: true}
+    version: 2
   apt:
     geoip: true
     preserve_sources_list: false
@@ -8,40 +15,18 @@ autoinstall:
       uri: http://pt.archive.ubuntu.com/ubuntu
     - arches: [default]
       uri: http://ports.ubuntu.com/ubuntu-ports
+  storage:
+    layout:
+      name: direct
   identity: {hostname: vm_feup_linux, password: $6$Da6t8.9yoPRbJ/DL$WUUPjknPoRk8m7RU69ybqGxcs564qIpwij8vllHIO/kkxUaW.dcyqtKYLSYVAmmGfsB/6Thuiex.QC6XfjcQs.,
     realname: luisd, username: luisd}
-  kernel:
-    kernel: {package: linux-generic}
-  keyboard: {layout: pt, toggle: null, variant: ''}
-  locale: en_US.UTF-8
-  network:
-    ethernets:
-      enp0s3: {dhcp4: true}
-    version: 2
   ssh:
     allow-pw: true
     authorized-keys: []
     install-server: false
-  storage:
-    config:
-    - {ptable: gpt, serial: VBOX_HARDDISK_VBd79dc2b4-39feb0fa, path: /dev/sda, wipe: superblock,
-      preserve: false, name: '', grub_device: true, type: disk, id: disk-sda}
-    - {device: disk-sda, size: 1048576, flag: bios_grub, number: 1, preserve: false,
-      grub_device: false, type: partition, id: partition-0}
-    - {device: disk-sda, size: 1073741824, wipe: superblock, flag: '', number: 2,
-      preserve: false, grub_device: false, type: partition, id: partition-1}
-    - {fstype: ext4, volume: partition-1, preserve: false, type: format, id: format-0}
-    - {device: disk-sda, size: 20397948928, wipe: superblock, flag: '', number: 3,
-      preserve: false, grub_device: false, type: partition, id: partition-2}
-    - name: ubuntu-vg
-      devices: [partition-2]
-      preserve: false
-      type: lvm_volgroup
-      id: lvm_volgroup-0
-    - {name: ubuntu-lv, volgroup: lvm_volgroup-0, size: 20396900352B, wipe: superblock,
-      preserve: false, type: lvm_partition, id: lvm_partition-0}
-    - {fstype: ext4, volume: lvm_partition-0, preserve: false, type: format, id: format-1}
-    - {path: /, device: format-1, type: mount, id: mount-1}
-    - {path: /boot, device: format-0, type: mount, id: mount-0}
+  packages:
+    - build-essential
+    - cmake
+    - git
   updates: security
-  version: 1
+  
