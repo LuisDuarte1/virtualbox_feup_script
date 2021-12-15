@@ -3,10 +3,6 @@ autoinstall:
   version: 1
   keyboard: {layout: pt, toggle: null, variant: ''}
   locale: en_US.UTF-8
-  network:
-    ethernets:
-      enp0s3: {dhcp4: true}
-    version: 2
   apt:
     geoip: true
     preserve_sources_list: false
@@ -29,4 +25,5 @@ autoinstall:
     - cmake
     - git
   updates: security
-  
+  late-commands:
+    #- curtin in-target --target /target -- apt install --no-install-recommends lubuntu-desktop -y  

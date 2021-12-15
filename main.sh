@@ -4,9 +4,9 @@
 
 
 intial_directory=$(pwd)
-ram="4098"
-cpu="2"
-network_adapter="ens33" #get adapter later
+ram="8142"
+cpu="4"
+
 
 cd /tmp
 wget -nc http://releases.ubuntu.com/20.04/ubuntu-20.04.3-live-server-amd64.iso
@@ -50,9 +50,9 @@ sed -i 's|iso/|./|g' ubuntu/md5sum.txt
 
 # Create vm with 8gb of ram
 VBoxManage createvm --name FEUPVM --ostype Ubuntu_64 --register --basefolder /tmp/vm
-VBoxManage modifyvm FEUPVM --cpus $cpu --memory $ram --vram 255 --accelerate3d on
+VBoxManage modifyvm FEUPVM --cpus $cpu --memory $ram --vram 255
 
-VBoxManage modifyvm FEUPVM --nic1 bridged --bridgeadapter1 $network_adapter
+VBoxManage modifyvm FEUPVM --nic1 nat
 
 VBoxManage createhd --filename /tmp/vm/FEUPVM.vdi --size 12024 --variant Standard
 
