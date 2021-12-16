@@ -24,6 +24,7 @@ autoinstall:
     - build-essential
     - cmake
     - git
-  updates: security
+  update: no
   late-commands:
-    #- curtin in-target --target /target -- apt install --no-install-recommends lubuntu-desktop -y  
+    - curtin in-target --target /target -- apt install --no-install-recommends lxde xorg lightdm lightdm-gtk-greeter -y  
+    - curtin in-target --target /target -- systemctl set-default graphical.target 
